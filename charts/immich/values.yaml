@@ -3,7 +3,6 @@
 ## Refer there for more detail about the supported values
 
 # These entries are shared between all the Immich components
-
 env:
   REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
   DB_HOSTNAME: "{{ .Release.Name }}-postgresql"

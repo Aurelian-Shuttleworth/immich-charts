@@ -11,6 +11,33 @@ env:
   {{- if .Values.redis.enabled }}
       REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
   {{- end }}
+  {{- if .Values.postgresql.enabled }}
+  DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
+  DB_USERNAME: "{{ .Values.postgresql.global.postgresql.auth.username }}"
+  DB_DATABASE_NAME: "{{ .Values.postgresql.global.postgresql.auth.database }}"
+  DB_PASSWORD: "{{ .Values.postgresql.global.postgresql.auth.password }}"
+  {{- else if .Values.immich.database.existingSecret.name }}
+  DB_HOSTNAME:
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.immich.database.existingSecret.name | quote }}
+        key: {{ .Values.immich.database.existingSecret.hostnameKey | quote }}
+  DB_USERNAME:
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.immich.database.existingSecret.name | quote }}
+        key: {{ .Values.immich.database.existingSecret.usernameKey | quote }}
+  DB_PASSWORD:
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.immich.database.existingSecret.name | quote }}
+        key: {{ .Values.immich.database.existingSecret.passwordKey | quote }}
+  DB_DATABASE_NAME:
+    valueFrom:
+      secretKeyRef:
+        name: {{ .Values.immich.database.existingSecret.name | quote }}
+        key: {{ .Values.immich.database.existingSecret.databaseNameKey | quote }}
+  {{- end }}
 
 {{- if .Values.immich.configuration }}
 podAnnotations:

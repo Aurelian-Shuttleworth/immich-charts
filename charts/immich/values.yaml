@@ -3,13 +3,7 @@
 ## Refer there for more detail about the supported values
 
 # These entries are shared between all the Immich components
-# Refactor and move the DB details so that they can either be provided as part of the .Values.postgresql values or referenced from an existing secret by suppliing the name and key for the k8s secret AI!
 env:
-  DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
-  DB_USERNAME: "{{ .Values.postgresql.global.postgresql.auth.username }}"
-  DB_DATABASE_NAME: "{{ .Values.postgresql.global.postgresql.auth.database }}"
-  # -- You should provide your own secret outside of this helm-chart and use `postgresql.global.postgresql.auth.existingSecret` to provide credentials to the postgresql instance
-  DB_PASSWORD: "{{ .Values.postgresql.global.postgresql.auth.password }}"
   IMMICH_MACHINE_LEARNING_URL: '{{ printf "http://%s-machine-learning:3003" .Release.Name }}'
 
 image:
@@ -29,6 +23,20 @@ immich:
   # ref: https://immich.app/docs/install/config-file/
   #
   configuration: {}
+  database:
+    existingSecret:
+      # -- Name of the existing Kubernetes secret containing database credentials.
+      # Required if postgresql.enabled is false and you want to connect to an external database.
+      # If not provided and postgresql.enabled is false, the application will not receive database credentials.
+      name: ""
+      # -- Key in the secret for the database hostname.
+      hostnameKey: "DB_HOSTNAME"
+      # -- Key in the secret for the database username.
+      usernameKey: "DB_USERNAME"
+      # -- Key in the secret for the database password.
+      passwordKey: "DB_PASSWORD"
+      # -- Key in the secret for the database name.
+      databaseNameKey: "DB_DATABASE_NAME"
     # trash:
     #   enabled: false
     #   days: 30

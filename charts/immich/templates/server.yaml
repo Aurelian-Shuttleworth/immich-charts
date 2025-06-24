@@ -1,13 +1,15 @@
 {{- define "immich.server.hardcodedValues" -}}
 global:
   nameOverride: server
-# Refactor the redis ENV values from the charts/immich/values.yaml file to be here and optional based on if values.redis.enabled is true AI!
 env:
   {{ if .Values.immich.metrics.enabled }}
       IMMICH_TELEMETRY_INCLUDE: all
   {{ end }}
   {{- if .Values.immich.configuration }}
       IMMICH_CONFIG_FILE: /config/immich-config.yaml
+  {{- end }}
+  {{- if .Values.redis.enabled }}
+      REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
   {{- end }}
 
 {{- if .Values.immich.configuration }}

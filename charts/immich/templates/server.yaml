@@ -37,6 +37,11 @@ env:
       secretKeyRef:
         name: {{ .Values.immich.database.existingSecret.name | quote }}
         key: {{ .Values.immich.database.existingSecret.databaseNameKey | quote }}
+  {{- else if .Values.immich.database.hostname }}
+  DB_HOSTNAME: {{ .Values.immich.database.hostname | quote }}
+  DB_USERNAME: {{ .Values.immich.database.username | quote }}
+  DB_PASSWORD: {{ .Values.immich.database.password | quote }}
+  DB_DATABASE_NAME: {{ .Values.immich.database.name | quote }}
   {{- end }}
 
 {{- if .Values.immich.configuration }}

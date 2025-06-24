@@ -37,6 +37,11 @@ immich:
       passwordKey: "DB_PASSWORD"
       # -- Key in the secret for the database name.
       databaseNameKey: "DB_DATABASE_NAME"
+    # -- Manual database connection details. Used if postgresql.enabled is false and existingSecret.name is not provided.
+    # hostname: ""
+    # username: ""
+    # password: ""
+    # name: "" # Database name
     # trash:
     #   enabled: false
     #   days: 30

@@ -30,13 +30,13 @@ immich:
       # If not provided and postgresql.enabled is false, the application will not receive database credentials.
       name: ""
       # -- Key in the secret for the database hostname.
-      hostnameKey: "DB_HOSTNAME"
+      hostnameKey: "host"
       # -- Key in the secret for the database username.
-      usernameKey: "DB_USERNAME"
+      usernameKey: "user"
       # -- Key in the secret for the database password.
-      passwordKey: "DB_PASSWORD"
+      passwordKey: "password"
       # -- Key in the secret for the database name.
-      databaseNameKey: "DB_DATABASE_NAME"
+      databaseNameKey: "dbname"
     # -- Manual database connection details. Used if postgresql.enabled is false and existingSecret.name is not provided.
     # hostname: ""
     # username: ""
